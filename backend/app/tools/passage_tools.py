@@ -1,3 +1,4 @@
+import os
 _current_user_id = None
 
 def set_current_user(user_id: str):
@@ -20,7 +21,7 @@ def save_to_passage(
            financial, existential, family, other.
     status: one of open, holding, resolved."""
     from google.cloud import firestore
-    db = firestore.Client(project="johnkeats-ai")
+    db = firestore.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT"))
     doc_ref = db.collection("passages").document()
     doc_ref.set({
         "text": uncertainty_text,
@@ -42,7 +43,7 @@ def get_passage_history(
     theme_filter: optional, one of career, relationship, identity, etc.
     limit: number of entries to return, default 5."""
     from google.cloud import firestore
-    db = firestore.Client(project="johnkeats-ai")
+    db = firestore.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT"))
     query = db.collection("passages").order_by(
         "created_at", direction=firestore.Query.DESCENDING
     ).limit(limit)
@@ -68,7 +69,7 @@ def resolve_uncertainty(
     uncertainty_id: the document ID of the uncertainty.
     resolution_note: optional 10-20 word note on how it resolved."""
     from google.cloud import firestore
-    db = firestore.Client(project="johnkeats-ai")
+    db = firestore.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT"))
     doc_ref = db.collection("passages").document(uncertainty_id)
     doc_ref.update({
         "status": "resolved",
@@ -97,6 +98,11 @@ def crisis_resources(locale: str = "en-AU") -> dict:
         "en-GB": {
             "name": "Samaritans",
             "phone": "116 123",
+            "available": "24 hours, 7 days"
+        },
+        "hi-IN": {
+            "name": "Vandrevala Foundation",
+            "phone": "9999 666 555",
             "available": "24 hours, 7 days"
         }
     }

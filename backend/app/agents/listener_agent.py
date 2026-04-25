@@ -1,5 +1,5 @@
 """
-Listener agent for structured scoring of Keats's attunement quality.
+Listener agent for structured scoring of Karuna's attunement quality.
 6 attunement dimensions + 1 self-monitoring dimension.
 """
 
@@ -13,14 +13,14 @@ def compute_deterministic_metrics(transcript: List[Dict]) -> Dict:
     """Python computes deterministic signals."""
     metrics = {
         "user_turns": 0,
-        "keats_turns": 0,
+        "Karuna_turns": 0,
         "avg_user_turn_length": 0,
         "silence_count": 0,
         "repetition_flags": []
     }
     
     user_texts = []
-    keats_texts = []
+    Karuna_texts = []
     
     for entry in transcript:
         text = entry.get("text", "")
@@ -28,11 +28,11 @@ def compute_deterministic_metrics(transcript: List[Dict]) -> Dict:
             metrics["user_turns"] += 1
             user_texts.append(text)
         else:
-            metrics["keats_turns"] += 1
-            keats_texts.append(text)
+            metrics["Karuna_turns"] += 1
+            Karuna_texts.append(text)
             
             # Simple repetition check
-            if any(text == prev for prev in keats_texts[:-1]):
+            if any(text == prev for prev in Karuna_texts[:-1]):
                 metrics["repetition_flags"].append(f"Repeated full response: {text[:50]}...")
     
     if user_texts:
@@ -102,7 +102,7 @@ async def score_conversation(db, conversation: Dict):
         "solution_resistance": scores["solution_resistance"],
         "image_quality": scores["image_quality"],
         "conversation_arc": scores["conversation_arc"],
-        "keats_repetition": scores["repetition_score"],
+        "Karuna_repetition": scores["repetition_score"],
         "overall_score": scores["overall_score"],
         "repetition_flags": deterministic["repetition_flags"],
         "qualitative_summary": scores["qualitative_summary"],

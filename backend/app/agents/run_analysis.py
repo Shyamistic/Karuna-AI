@@ -13,7 +13,7 @@ from agents.orchestrator_agent import generate_insights
 from agents.policy_gate import filter_recommendations
 
 async def run():
-    db = firestore.Client(project="johnkeats-ai")
+    db = firestore.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT"))
     
     # Find unanalysed conversations in Path 2 (anonymised)
     # For testing, we might need to manually trigger ingest/score for new documents

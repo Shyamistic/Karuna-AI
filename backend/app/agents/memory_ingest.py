@@ -26,11 +26,11 @@ async def ingest_conversation(db, conversation: Dict):
             "summary": {"type": "STRING"},
             "emotional_arc": {"type": "ARRAY", "items": {"type": "STRING"}},
             "topics": {"type": "ARRAY", "items": {"type": "STRING"}},
-            "keats_moves": {"type": "ARRAY", "items": {"type": "STRING"}},
+            "Karuna_moves": {"type": "ARRAY", "items": {"type": "STRING"}},
             "silence_moments": {"type": "INTEGER"},
             "importance_rating": {"type": "NUMBER"}
         },
-        "required": ["summary", "emotional_arc", "topics", "keats_moves", "silence_moments", "importance_rating"]
+        "required": ["summary", "emotional_arc", "topics", "Karuna_moves", "silence_moments", "importance_rating"]
     }
 
     prompt = load_prompt("memory-ingest.md")
@@ -59,7 +59,7 @@ async def ingest_conversation(db, conversation: Dict):
         "summary": analysis["summary"],
         "emotional_arc": analysis["emotional_arc"],
         "topics": analysis["topics"],
-        "keats_moves": analysis["keats_moves"],
+        "Karuna_moves": analysis["Karuna_moves"],
         "silence_count": analysis["silence_moments"],
         "importance": analysis["importance_rating"],
         "consolidated": False,

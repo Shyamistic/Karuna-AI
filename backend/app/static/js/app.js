@@ -1,9 +1,12 @@
-import KeatsOrb from './orb.js';
+import KarunaOrb from './karuna-orb.js';
+import DhvaniSoundscape from './ambient.js';
 import { startAudioPlayerWorklet } from "./audio-player.js";
 import { startAudioRecorderWorklet } from "./audio-recorder.js";
 
+const soundscape = new DhvaniSoundscape();
+
 // Initialize the Orb (with delay for visual entrance)
-const orb = new KeatsOrb('canvas-container');
+const orb = new KarunaOrb('canvas-container');
 const canvas = document.querySelector('#canvas-container canvas');
 if (canvas) canvas.style.opacity = '0';
 
@@ -21,10 +24,10 @@ setTimeout(() => {
 
 // Generate or retrieve persistent user ID
 function getUserId() {
-    let userId = localStorage.getItem('keats_user_id');
+    let userId = localStorage.getItem('karuna_user_id');
     if (!userId) {
         userId = 'user-' + crypto.randomUUID();
-        localStorage.setItem('keats_user_id', userId);
+        localStorage.setItem('karuna_user_id', userId);
     }
     return userId;
 }
@@ -35,7 +38,7 @@ const sessionId = "demo-session-" + Math.random().toString(36).substring(7);
 let websocket = null;
 let is_audio = false;
 let fadeTimeout = null;
-let keatsSpeakingTimeout = null;
+let karunaSpeakingTimeout = null;
 
 // DOM Elements
 const statusText = document.getElementById("statusText");
@@ -109,10 +112,10 @@ function connectWebsocket() {
                     const audioData = base64ToArray(part.inlineData.data);
                     audioPlayerNode.port.postMessage(audioData);
                     
-                    // State Detection: KEATS_SPEAKING
-                    orb.setState('KEATS_SPEAKING', 0.5);
-                    if (keatsSpeakingTimeout) clearTimeout(keatsSpeakingTimeout);
-                    keatsSpeakingTimeout = setTimeout(() => {
+                    // State Detection: KARUNA_SPEAKING
+                    orb.setState('KARUNA_SPEAKING', 0.5);
+                    if (karunaSpeakingTimeout) clearTimeout(karunaSpeakingTimeout);
+                    karunaSpeakingTimeout = setTimeout(() => {
                         orb.setState('SILENCE');
                     }, 5000); // 5s fallback safety
                 }
@@ -128,14 +131,14 @@ function connectWebsocket() {
         }
 
         if (adkEvent.outputTranscription) {
-            orb.setState('KEATS_SPEAKING', 1.0);
+            orb.setState('KARUNA_SPEAKING', 1.0);
             if (adkEvent.outputTranscription.text) {
                 // displayMessage(adkEvent.outputTranscription.text);
             }
         }
 
         if (adkEvent.turnComplete) {
-            if (keatsSpeakingTimeout) clearTimeout(keatsSpeakingTimeout);
+            if (karunaSpeakingTimeout) clearTimeout(karunaSpeakingTimeout);
             updateStatus("listening", 'SILENCE');
         }
 
@@ -144,7 +147,7 @@ function connectWebsocket() {
             if (audioPlayerNode) {
                 audioPlayerNode.port.postMessage({ command: "endOfAudio" });
             }
-            if (keatsSpeakingTimeout) clearTimeout(keatsSpeakingTimeout);
+            if (karunaSpeakingTimeout) clearTimeout(karunaSpeakingTimeout);
             updateStatus("listening", 'SILENCE');
         }
     };
@@ -194,8 +197,9 @@ function audioRecorderHandler(pcmData) {
             sum += Math.abs(samples[i]);
         }
         const avg = sum / samples.length;
-        if (avg > 100) { // Very low threshold for visual pulse
-            orb.setState('USER_SPEAKING', Math.min(avg / 1000, 1.0));
+        if (avg > 100) { // Volume threshold
+            const normalizedAvg = Math.min(avg / 2000, 1.0);
+            orb.setState('USER_SPEAKING', normalizedAvg);
         }
     }
 }
@@ -216,6 +220,7 @@ function startAudio() {
 startAudioButton.addEventListener("click", () => {
     startAudioButton.classList.add('hidden');
     startAudio();
+    soundscape.start();
     is_audio = true;
     updateStatus("listening", 'SILENCE');
 });

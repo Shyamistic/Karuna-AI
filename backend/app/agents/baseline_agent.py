@@ -70,10 +70,10 @@ async def generate_baseline(db):
     }
 
     prompt = (
-        "You are a Baseline Agent. Analyze the following aggregate statistics from Keats's conversation scores. "
+        "You are a Baseline Agent. Analyze the following aggregate statistics from Karuna's conversation scores. "
         "Identify: \n"
         "- Trend direction per dimension (improving / stable / degrading)\n"
-        "- Top 3 strengths and top 3 weaknesses in Keats's attunement\n"
+        "- Top 3 strengths and top 3 weaknesses in Karuna's attunement\n"
         "- Narrative interpretation of the data\n"
         "- Initial recommendations for the Orchestrator\n"
         "Return the analysis as JSON."

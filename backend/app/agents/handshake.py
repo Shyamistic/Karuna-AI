@@ -16,13 +16,10 @@ logger = logging.getLogger(__name__)
 env_path = Path(__file__).parent.parent.absolute() / ".env"
 load_dotenv(str(env_path), override=True)
 
-# Ensure correct project is targeted globally
-os.environ["GOOGLE_CLOUD_PROJECT"] = "johnkeats-ai"
-os.environ["GOOGLE_CLOUD_LOCATION"] = "us-central1"
-os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "TRUE"
+# Environment variables loaded from .env
 
 from google.cloud import firestore
-db = firestore.Client(project=os.environ["GOOGLE_CLOUD_PROJECT"])
+db = firestore.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT"))
 from agents.anonymiser import anonymise_transcript
 from agents.pii_auditor import audit_pii
 from agents.annotation_validator import validate_annotations
@@ -36,7 +33,7 @@ from agents.policy_gate import filter_recommendations
 
 
 async def handshake():
-    db = firestore.Client(project="johnkeats-ai")
+    db = firestore.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT"))
     
     # --- PHASE 1: New Transcripts ---
     pending = list(db.collection("pending_analysis")\

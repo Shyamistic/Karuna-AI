@@ -7,7 +7,7 @@ from typing import List, Dict
 async def get_conversation_context(db, user_id: str):
     """Called at conversation start. Returns personal + system context."""
     
-    # Path 1: Personal context (what does Keats know about THIS person?)
+    # Path 1: Personal context (what does Karuna know about THIS person?)
     # For now, return recent memory summaries
     memories = db.collection("users").document(user_id) \
                  .collection("memories") \

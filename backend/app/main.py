@@ -19,13 +19,13 @@ from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
 
-# Load environment variables from env_file BEFORE importing agent
-env_path = Path(__file__).parent.absolute() / "env_file"
+# Load environment variables from .env BEFORE importing agent
+env_path = Path(__file__).parent.absolute() / ".env"
 load_dotenv(str(env_path))
 
 # Import agent after loading environment variables
 # pylint: disable=wrong-import-position
-from keats_agent.agent import keats_agent
+from karuna_agent.agent import karuna_agent
 from tools.passage_tools import set_current_user
 
 # Configure logging
@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 warnings.filterwarnings("ignore", category=UserWarning, module="pydantic")
 
 # Application name constant
-APP_NAME = "johnkeats-ai"
+APP_NAME = "karuna-ai"
 
 # ========================================
 # Phase 1: Application Initialization (once at startup)
@@ -55,7 +55,7 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 session_service = InMemorySessionService()
 
 # Define your runner
-runner = Runner(app_name=APP_NAME, agent=keats_agent, session_service=session_service)
+runner = Runner(app_name=APP_NAME, agent=karuna_agent, session_service=session_service)
 
 # ========================================
 # HTTP Endpoints
@@ -103,68 +103,29 @@ async def websocket_endpoint(
     # Phase 2: Session Initialization (once per streaming session)
     # ========================================
 
-    # Automatically determine response modality based on model architecture
-    # Native audio models (containing "native-audio" in name)
-    # ONLY support AUDIO response modality.
-    model_name = keats_agent.model
-    is_native_audio = "native-audio" in model_name.lower()
-
-    if is_native_audio:
-        # Native audio models require AUDIO response modality
-        run_config = RunConfig(
-            streaming_mode=StreamingMode.BIDI,
-            response_modalities=["AUDIO"],
-            speech_config=types.SpeechConfig(
-                voice_config=types.VoiceConfig(
-                    prebuilt_voice_config=types.PrebuiltVoiceConfig(
-                        voice_name=os.getenv("KEATS_VOICE_NAME", "Achird")
-                    )
+    # We want AUDIO out for Karuna
+    run_config = RunConfig(
+        streaming_mode=StreamingMode.BIDI,
+        response_modalities=["AUDIO"],
+        speech_config=types.SpeechConfig(
+            voice_config=types.VoiceConfig(
+                prebuilt_voice_config=types.PrebuiltVoiceConfig(
+                    voice_name="Aoede" # Calm female voice
                 )
-            ),
-            input_audio_transcription=types.AudioTranscriptionConfig(),
-            output_audio_transcription=types.AudioTranscriptionConfig(),
-            session_resumption=types.SessionResumptionConfig(),
-            realtime_input_config=types.RealtimeInputConfig(
-                automatic_activity_detection=types.AutomaticActivityDetection(
-                    disabled=False,
-                    end_of_speech_sensitivity=types.EndSensitivity.END_SENSITIVITY_LOW,
-                    silence_duration_ms=1000,
-                )
-            ),
-        )
-        logger.debug(
-            f"Native audio model detected: {model_name}, "
-            f"using AUDIO response modality with voice: {os.getenv('KEATS_VOICE_NAME')}"
-        )
-    else:
-        # Half-cascade models support TEXT response modality
-        # for faster performance
-        response_modalities = ["TEXT"]
-        run_config = RunConfig(
-            streaming_mode=StreamingMode.BIDI,
-            response_modalities=response_modalities,
-            input_audio_transcription=None,
-            output_audio_transcription=None,
-            session_resumption=types.SessionResumptionConfig(),
-            realtime_input_config=types.RealtimeInputConfig(
-                automatic_activity_detection=types.AutomaticActivityDetection(
-                    disabled=False,
-                    end_of_speech_sensitivity=types.EndSensitivity.END_SENSITIVITY_LOW,
-                    silence_duration_ms=1000,
-                )
-            ),
-        )
-        logger.debug(
-            f"Half-cascade model detected: {model_name}, "
-            "using TEXT response modality"
-        )
-        # Warn if user tried to enable native-audio-only features
-        if proactivity or affective_dialog:
-            logger.warning(
-                f"Proactivity and affective dialog are only supported on native "
-                f"audio models. Current model: {model_name}. "
-                f"These settings will be ignored."
             )
+        ),
+        input_audio_transcription=types.AudioTranscriptionConfig(),
+        output_audio_transcription=types.AudioTranscriptionConfig(),
+        session_resumption=types.SessionResumptionConfig(),
+        realtime_input_config=types.RealtimeInputConfig(
+            automatic_activity_detection=types.AutomaticActivityDetection(
+                disabled=False,
+                end_of_speech_sensitivity=types.EndSensitivity.END_SENSITIVITY_LOW,
+                silence_duration_ms=1000,
+            )
+        ),
+    )
+    logger.debug(f"Using AUDIO response modality with voice: Aoede")
     logger.debug(f"RunConfig created: {run_config}")
 
     # Get or create session (handles both new sessions and reconnections)
@@ -313,7 +274,7 @@ async def websocket_endpoint(
         try:
             from google.cloud import firestore
             from datetime import datetime
-            db = firestore.Client(project=APP_NAME)
+            db = firestore.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT"))
             
             # Note: In a real ADK application, we'd accumulate the transcript 
             # in a variable. For this hackathon step, we'll demonstrate the hook.
@@ -324,7 +285,7 @@ async def websocket_endpoint(
             
             # For demonstration, we'll use a placeholder transcript if one wasn't captured.
             # In production, this would be the actual conversation logs.
-            demo_transcript = [{"role": "user", "text": "Hello Keats"}, {"role": "model", "text": "I am listening."}]
+            demo_transcript = [{"role": "user", "text": "Hello Karuna"}, {"role": "model", "text": "I am listening."}]
             
             # Write 1: User memory (PII retained, personal space)
             db.collection("users").document(user_id)\

@@ -1,11 +1,11 @@
 #!/bin/bash
 set -e
 
-PROJECT_ID="johnkeats-ai"
+PROJECT_ID="karuna-ai"
 REGION="us-central1"
-SERVICE_NAME="johnkeats-ai"
-REPO_NAME="johnkeats-ai"
-IMAGE_NAME="johnkeats-ai"
+SERVICE_NAME="karuna-ai"
+REPO_NAME="karuna-ai"
+IMAGE_NAME="karuna-ai"
 
 # Build
 gcloud builds submit \

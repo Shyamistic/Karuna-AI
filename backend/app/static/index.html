@@ -20,22 +20,34 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JohnKeats.AI | Philosophical Companion</title>
+    <title>Karuna AI | Your Compassionate Companion</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23D4A574' opacity='0.8'/><circle cx='50' cy='50' r='25' fill='%23fff' opacity='0.5'/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/xml' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23E28743' opacity='0.8'/><circle cx='50' cy='50' r='25' fill='%23fff' opacity='0.5'/></svg>">
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/gtm.ns.html?id=GT-KTTMNQGC"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    <canvas id="stars-canvas"></canvas>
     <div id="canvas-container"></div>
 
     <div id="message-overlay"></div>
 
     <div class="interface">
-        <h1 id="mainTitle">JohnKeats.AI</h1>
+        <h1 id="mainTitle">Karuna AI</h1>
         
+        <div id="settings-panel">
+            <div class="setting">
+                <span>Presence</span>
+                <input type="range" id="presenceRange" min="0" max="100" value="50">
+            </div>
+            <div class="setting">
+                <span>Dhvani</span>
+                <input type="range" id="dhvaniRange" min="0" max="100" value="30">
+            </div>
+        </div>
+
         <div class="status-container">
             <div id="statusText">listening...</div>
             <div class="controls">
