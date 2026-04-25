@@ -1,26 +1,34 @@
-# Karuna AI (करुणा AI)
+<div align="center">
+  <img src="docs/assets/karuna_hero_banner.png" alt="Karuna AI Hero Banner" width="100%" />
+  
+  # Karuna AI (करुणा AI)
+  
+  *A voice-first AI companion designed to sit with you in your problems, not just solve them. Built on Karuna (Compassion)—the strength to stay present with suffering and uncertainty without looking away.*
+</div>
 
-A voice-first AI companion designed to sit with you in your problems, not just solve them. Built on Karuna (Compassion)—the strength to stay present with suffering and uncertainty without looking away.
+---
 
-**Designed for deep, compassionate listening.**
-
-## Live Demo
-
-[karuna-ai.example.com](https://karuna-ai.example.com)
-
-## What It Is
+## 🌌 What It Is
 
 Karuna AI is a presence. When you speak, Karuna listens. It reflects back the quiet truths underneath your words. It doesn't offer quick fixes or unsolicited advice. It offers "Daya" (Compassion)—the rare experience of being truly heard.
 
 The interface is a breathing saffron orb on a black screen with a generative star background. No chat UI. No distractions. Audio-reactive—pulses warmly when Karuna speaks, shifts to soft blue when you speak, and goes still in shared silence.
 
-Built on Gemini 2.5 Flash Native Audio, Karuna is bilingual, speaking both Hindi and English naturally, moving between them as you do.
+Built on **Gemini 2.0 Flash Multimodal Live API**, Karuna is bilingual, speaking both Hindi and English naturally, moving between them as you do.
 
-## Philosophy: Karuna (Daya)
+<div align="center">
+  <img src="docs/assets/karuna_desktop_ui.png" alt="Karuna Desktop UI" width="80%" />
+</div>
+
+## 🪞 Philosophy: The Mirror of Daya
 
 Inspired by the ancient concept of *Karuna* (Compassion). Unlike pity, Karuna is the active choice to stay present with another's pain. It is the "sitting in the fire" together. 
 
-## Features
+<div align="center">
+  <img src="docs/assets/karuna_mirror_of_daya.png" alt="Mirror of Daya" width="60%" />
+</div>
+
+## ✨ Features
 
 - **Emotional Resonance UI**: Orb shifts color based on user sentiment (Saffron, Violet, Soft Green, Soft Pink).
 - **Rhythmic Breathing**: Pulse rate dynamically syncs with the user's speech amplitude.
@@ -29,143 +37,69 @@ Inspired by the ancient concept of *Karuna* (Compassion). Unlike pity, Karuna is
 - **Dhvani (Soundscapes)**: Generative ambient drone (Tibetan bowls style) via Web Audio API.
 - **Glassmorphic Settings**: Hidden UI for adjusting Presence and Sound controls.
 - **Cultural Wisdom**: Integrates teachings from Kabir, Rumi, and Sufi philosophy.
-- **Multi-Dialect Support**: Recognises and responds compassionately to various Hindi dialects.
-- **Presence Ledger**: Tracks "Shared Moments" rather than just transcripts.
-- **Session Aura**: Persistent visual emotional feedback on the interface.
 
-## Architecture
+<div align="center">
+  <img src="docs/assets/karuna_live_audio.png" alt="Live Audio Visualization" width="80%" />
+</div>
 
-Please see `docs/architecture.md` for a complete system diagram.
+## 🏗 Architecture & Tech Stack
 
-**Backend:** FastAPI server on Cloud Run handles WebSocket connections. The Google ADK manages bidirectional audio streaming with the Gemini model. Four Firestore tools handle the user's "Dark Passage" — a constellation of saved uncertainties and reflections.
+Karuna AI uses a modern, real-time architecture to achieve sub-second conversational latency with emotional awareness.
 
-**Model:** Gemini 2.5 Flash Native Audio via the Vertex AI Live API. Native audio means the model hears tone, pace, and hesitation — not just transcribed words. This enables affective dialogue: Karuna slows down when you sound anxious, stays steady when you're angry, comes closer when you're numb.
-
-**Frontend:** Vanilla JavaScript and Three.js render a breathing orb on a black screen.
-
-## Tech Stack
+<div align="center">
+  <img src="docs/assets/karuna_architecture.png" alt="Karuna Architecture" width="100%" />
+</div>
 
 - **Backend:** Python 3.11, FastAPI, Google ADK, google-genai, google-cloud-firestore
-- **Model:** Gemini 2.5 Flash Native Audio (Vertex AI Live API)
+- **Model:** Gemini 2.0 Flash (Multimodal Live API via WebSockets)
 - **Frontend:** Vanilla JS, Three.js (r128), Web Audio API
 - **Storage:** Google Cloud Firestore (karuna-ai project)
-- **Deployment:** Docker → Artifact Registry → Google Cloud Run
-- **Streaming:** WebSocket bidirectional audio (ADK bidi-streaming)
+- **Deployment:** Render (Dockerized Web Service)
 
-## Local Development
+## 📱 Cross-Platform Design
 
-1. Clone the repo:
+Designed to feel native, calming, and premium on both desktop and mobile devices.
+
+<div align="center">
+  <img src="docs/assets/karuna_mobile_ui.png" alt="Mobile UI" width="30%" />
+</div>
+
+## 🌌 The Dark Passage (Constellation)
+
+Karuna maintains a persistent memory of your unresolved thoughts and emotions, visualizing them as a constellation of stars in the background.
+
+<div align="center">
+  <img src="docs/assets/karuna_constellation.png" alt="Constellation Memory" width="80%" />
+</div>
+
+## 🚀 Local Development
+
+1. Clone the repo & setup environment:
 ```bash
-git clone https://github.com/karuna-ai/karuna-ai.git
-cd karuna-ai
-```
-
-2. Set up Python 3.11 environment:
-```bash
-python3.11 -m venv .venv
+git clone https://github.com/Shyamistic/Karuna-AI.git
+cd Karuna-AI
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-3. Copy the example environment file and fill in your values:
-```bash
-cp .env.example backend/app/.env
-```
-
-Required variables:
-```
-GOOGLE_CLOUD_PROJECT=karuna-ai
-GOOGLE_CLOUD_LOCATION=us-central1
-GOOGLE_GENAI_USE_VERTEXAI=TRUE
-KARUNA_VOICE_NAME=Achird
-```
-
-4. Install dependencies:
+2. Install dependencies:
 ```bash
 cd backend/app
-pip install -e .
+pip install -r requirements.txt
 ```
 
-5. Run the server:
+3. Set up environment variables (`backend/app/.env`):
+```env
+GOOGLE_API_KEY=your_gemini_api_key
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
+KARUNA_VOICE_NAME=Aoede
+```
+
+4. Run the server:
 ```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-6. Open [http://localhost:8000](http://localhost:8000) in your browser.
+## 📜 License
 
-## Running the Calibration Pipeline
-
-After having conversations with Karuna, process the accumulated transcripts:
-
-```bash
-cd backend/app
-export GOOGLE_CLOUD_PROJECT=karuna-ai
-export GOOGLE_CLOUD_LOCATION=us-central1
-export GOOGLE_GENAI_USE_VERTEXAI=TRUE
-python3 -m agents.handshake
-```
-
-This runs the full pipeline: anonymisation → scoring → consolidation → baseline → orchestrator → policy gate.
-
-## Project Structure
-
-```
-karuna-ai/
-├── backend/app/
-│   ├── karuna_agent/
-│   │   ├── __init__.py
-│   │   └── agent.py              # Voice agent definition + system prompt
-│   ├── tools/
-│   │   ├── __init__.py
-│   │   ├── passage_tools.py      # Firestore tools (save/retrieve/resolve uncertainties)
-│   │   └── blessing_tools.py     # Vardaan tool for generative reflections
-│   ├── agents/                   # Calibration pipeline agents
-│   ├── static/
-│   │   ├── css/style.css
-│   │   ├── js/
-│   │   │   ├── app.js            # WebSocket + state machine
-│   │   │   ├── karuna-orb.js     # Three.js breathing orb
-│   │   │   ├── ambient.js        # Dhvani soundscape
-│   │   │   ├── audio-player.js
-│   │   │   └── audio-recorder.js
-│   │   └── index.html
-│   ├── main.py                   # FastAPI + WebSocket handler
-│   └── pyproject.toml
-├── knowledge-base/               # Root knowledge base mirroring
-├── docs/                         # Architecture diagrams and mockups
-├── deploy.sh
-├── Dockerfile
-├── .env.example
-└── README.md
-```
-
-## Knowledge Base
-
-The `knowledge-base/` directory contains reference documents:
-
-- **kb-01-karuna-philosophy.txt:** Karuna's philosophical framework.
-- **kb-02-karuna-patterns.txt:** Conversation patterns and emotional matching.
-- **kb-03-karuna-antipatterns.txt:** User anti-patterns and reframe directions.
-- **kb-04-boundaries-and-safety.txt:** Boundaries, crisis protocol, character integrity.
-- **kb-05-cultural-wisdom.txt:** Deep cultural context (Kabir, Sufi, Metta).
-
-## Tools
-
-Firestore-backed tools power the agent's memory:
-
-- **save_to_passage** — silently saves a user's core uncertainty.
-- **get_passage_history** — retrieves recent uncertainties.
-- **resolve_uncertainty** — marks an uncertainty as resolved.
-- **crisis_resources** — provides localised crisis support information.
-- **generate_vardaan** — generates a poetic blessing/reflection.
-
-## Governed Calibration Pipeline
-
-Processing conversations through two data paths:
-
-**Path 1:** User Memory — full transcript with PII retained, per-user isolation. Karuna remembers who you are across sessions.
-
-**Path 2:** Anonymised Learning — five-stage anonymisation, adversarial audit, emotional weight annotation. Scored across six attunement dimensions. Cross-conversation pattern detection generates calibration hypotheses filtered by a deterministic policy gate.
-
-## License
-
-MIT
+MIT License
