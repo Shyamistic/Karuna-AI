@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/assets/karuna_hero_banner.png" alt="Karuna AI Hero Banner" width="100%" />
+  <img src="https://raw.githubusercontent.com/Shyamistic/Karuna-AI/main/docs/assets/karuna_hero_banner_1777150771109.png" alt="Karuna AI Hero Banner" width="100%" />
   
   # Karuna AI (करुणा AI)
   
@@ -17,7 +17,7 @@ The interface is a breathing saffron orb on a black screen with a generative sta
 Built on **Gemini 2.0 Flash Multimodal Live API**, Karuna is bilingual, speaking both Hindi and English naturally, moving between them as you do.
 
 <div align="center">
-  <img src="docs/assets/karuna_desktop_ui.png" alt="Karuna Desktop UI" width="80%" />
+  <img src="https://raw.githubusercontent.com/Shyamistic/Karuna-AI/main/docs/assets/karuna_desktop_ui_1777150860309.png" alt="Karuna Desktop UI" width="80%" />
 </div>
 
 ## 🪞 Philosophy: The Mirror of Daya
@@ -25,7 +25,7 @@ Built on **Gemini 2.0 Flash Multimodal Live API**, Karuna is bilingual, speaking
 Inspired by the ancient concept of *Karuna* (Compassion). Unlike pity, Karuna is the active choice to stay present with another's pain. It is the "sitting in the fire" together. 
 
 <div align="center">
-  <img src="docs/assets/karuna_mirror_of_daya.png" alt="Mirror of Daya" width="60%" />
+  <img src="https://raw.githubusercontent.com/Shyamistic/Karuna-AI/main/docs/assets/karuna_mirror_of_daya_1777150807816.png" alt="Mirror of Daya" width="60%" />
 </div>
 
 ## ✨ Features
@@ -39,7 +39,7 @@ Inspired by the ancient concept of *Karuna* (Compassion). Unlike pity, Karuna is
 - **Cultural Wisdom**: Integrates teachings from Kabir, Rumi, and Sufi philosophy.
 
 <div align="center">
-  <img src="docs/assets/karuna_live_audio.png" alt="Live Audio Visualization" width="80%" />
+  <img src="https://raw.githubusercontent.com/Shyamistic/Karuna-AI/main/docs/assets/karuna_live_audio_1777150821797.png" alt="Live Audio Visualization" width="80%" />
 </div>
 
 ## 🏗 Architecture & Tech Stack
@@ -47,7 +47,7 @@ Inspired by the ancient concept of *Karuna* (Compassion). Unlike pity, Karuna is
 Karuna AI uses a modern, real-time architecture to achieve sub-second conversational latency with emotional awareness.
 
 <div align="center">
-  <img src="docs/assets/karuna_architecture.png" alt="Karuna Architecture" width="100%" />
+  <img src="https://raw.githubusercontent.com/Shyamistic/Karuna-AI/main/docs/assets/karuna_architecture_1777150785296.png" alt="Karuna Architecture" width="100%" />
 </div>
 
 - **Backend:** Python 3.11, FastAPI, Google ADK, google-genai, google-cloud-firestore
@@ -61,7 +61,7 @@ Karuna AI uses a modern, real-time architecture to achieve sub-second conversati
 Designed to feel native, calming, and premium on both desktop and mobile devices.
 
 <div align="center">
-  <img src="docs/assets/karuna_mobile_ui.png" alt="Mobile UI" width="30%" />
+  <img src="https://raw.githubusercontent.com/Shyamistic/Karuna-AI/main/docs/assets/karuna_mobile_ui_1777150845452.png" alt="Mobile UI" width="30%" />
 </div>
 
 ## 🌌 The Dark Passage (Constellation)
@@ -69,7 +69,7 @@ Designed to feel native, calming, and premium on both desktop and mobile devices
 Karuna maintains a persistent memory of your unresolved thoughts and emotions, visualizing them as a constellation of stars in the background.
 
 <div align="center">
-  <img src="docs/assets/karuna_constellation.png" alt="Constellation Memory" width="80%" />
+  <img src="https://raw.githubusercontent.com/Shyamistic/Karuna-AI/main/docs/assets/karuna_constellation_1777150884410.png" alt="Constellation Memory" width="80%" />
 </div>
 
 ## 🚀 Local Development
